@@ -1,11 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
 const app = express();
+const mongoose = require("mongoose");
 
 const cors = require("cors");
 const http = require("http");
 const { Server } = require("socket.io");
+const Lambs = require("./Model/icuModel");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,39 +31,6 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
-
-// 1- Create Schema
-const lambsSchema = new mongoose.Schema(
-  {
-    ecg: {
-      type: String,
-      trim: true,
-    },
-    resp: {
-      type: String,
-      trim: true,
-    },
-    spo2: {
-      type: String,
-      trim: true,
-    },
-    co2: {
-      type: String,
-      trim: true,
-    },
-    ibp: {
-      type: String,
-      trim: true,
-    },
-    nibp: {
-      type: String,
-      trim: true,
-    },
-  },
-  { timestamps: true }
-);
-
-const Lambs = mongoose.model("Lambs", lambsSchema);
 
 io.on("connection", (socket) => {
   console.log("Client connection");
