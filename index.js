@@ -34,13 +34,29 @@ mongoose
 // 1- Create Schema
 const lambsSchema = new mongoose.Schema(
   {
-    lamb_id: {
-      type: Number,
-      trim: true,
-      unique: [true, "lamb id Must be unique"],
-    },
-    status: {
+    ecg: {
       type: String,
+      trim: true,
+    },
+    resp: {
+      type: String,
+      trim: true,
+    },
+    spo2: {
+      type: String,
+      trim: true,
+    },
+    co2: {
+      type: String,
+      trim: true,
+    },
+    ibp: {
+      type: String,
+      trim: true,
+    },
+    nibp: {
+      type: String,
+      trim: true,
     },
   },
   { timestamps: true }
