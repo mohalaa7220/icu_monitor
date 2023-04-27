@@ -53,8 +53,22 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = 8000;
+// app.use("/last", (req, res) => {
+//   Lambs.findOne({}, {}, { sort: { createdAt: -1 } })
+//     .then((lastDoc) => {
+//       console.log("Last document:", lastDoc);
+//       res.send(lastDoc); // send the last document as a response
+//     })
+//     .catch((err) => console.log(err));
+// });
 
+// const PORT_2 = 9001;
+
+// app.listen(PORT_2, () => {
+//   console.log(`http://localhost:${PORT_2}`);
+// });
+
+const PORT = 8000;
 server.listen(PORT, () => {
   console.log(`ws://localhost:${PORT}`);
 });
