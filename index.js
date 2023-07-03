@@ -37,15 +37,18 @@ io.on("connection", (socket) => {
   console.log("Client connection");
 
   socket.on("icu", (data) => {
+    const { ecg, resp, spo2, co2, ibp, nibp } = data;
     const lambs = new Lambs({
-      ecg: data.ecg,
-      resp: data.resp,
-      spo2: data.spo2,
-      co2: data.co2,
-      ibp: data.ibp,
-      nibp: data.nibp,
+      ecg: ecg || null,
+      resp: resp || null,
+      spo2: spo2 || null,
+      co2: co2 || null,
+      ibp: ibp || null,
+      nibp: nibp || null,
     });
+
     console.log(data);
+
     lambs
       .save()
       .then(() => {
