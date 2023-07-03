@@ -34,6 +34,7 @@ mongoose
 
 io.on("connection", (socket) => {
   console.log("Client connection");
+
   socket.on("icu", (data) => {
     const lambs = new Lambs({
       ecg: data.ecg,
@@ -53,20 +54,16 @@ io.on("connection", (socket) => {
   });
 });
 
-// app.use("/last", (req, res) => {
-//   Lambs.findOne({}, {}, { sort: { createdAt: -1 } })
-//     .then((lastDoc) => {
-//       console.log("Last document:", lastDoc);
-//       res.send(lastDoc); // send the last document as a response
-//     })
-//     .catch((err) => console.log(err));
-// });
+app.use("/last_read", async (req, res) => {
+  const data = await Lambs.find({ sort: { createdAt: -1 } }).limit(5);
+  res.send({ data: data });
+});
 
-// const PORT_2 = 9001;
+const PORT_2 = 9001;
 
-// app.listen(PORT_2, () => {
-//   console.log(`http://localhost:${PORT_2}`);
-// });
+app.listen(PORT_2, () => {
+  console.log(`http://localhost:${PORT_2}`);
+});
 
 const PORT = 8000;
 server.listen(PORT, () => {
