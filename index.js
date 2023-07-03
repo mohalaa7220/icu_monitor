@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const mongoose = require("mongoose");
+const moment = require("moment");
 
 const cors = require("cors");
 const http = require("http");
@@ -55,8 +56,23 @@ io.on("connection", (socket) => {
 });
 
 app.use("/last_read", async (req, res) => {
-  const data = await Lambs.find({ sort: { createdAt: -1 } }).limit(5);
-  res.send({ data: data });
+  const { selected_date } = req.query;
+
+  if (!selected_date) {
+    const data = await Lambs.find().sort({ createdAt: -1 }).limit(5);
+    res.send({ data });
+  } else {
+    const startDate = moment(selected_date).startOf("day").toDate();
+    const endDate = moment(selected_date).endOf("day").toDate();
+
+    const data = await Lambs.find({
+      createdAt: { $gte: startDate, $lt: endDate },
+    })
+      .sort({ createdAt: -1 })
+      .limit(5);
+
+    res.send({ data });
+  }
 });
 
 const PORT_2 = 9001;
